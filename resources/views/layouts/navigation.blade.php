@@ -15,6 +15,21 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('courses.index')" :active="request()->routeIs('courses.*')">
+                        {{ __('Courses') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('enrollments.index')" :active="request()->routeIs('enrollments.*')">
+                        {{ __('Enrollments') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('attendances.index')" :active="request()->routeIs('attendances.*')">
+                        {{ __('Attendances') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('resources.index')" :active="request()->routeIs('resources.*')">
+                        {{ __('Resources') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('certificates.index')" :active="request()->routeIs('certificates.*')">
+                        {{ __('Certificates') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -69,6 +84,21 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('courses.index')" :active="request()->routeIs('courses.*')">
+                {{ __('Courses') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('enrollments.index')" :active="request()->routeIs('enrollments.*')">
+                {{ __('Enrollments') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('attendances.index')" :active="request()->routeIs('attendances.*')">
+                {{ __('Attendances') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('resources.index')" :active="request()->routeIs('resources.*')">
+                {{ __('Resources') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('certificates.index')" :active="request()->routeIs('certificates.*')">
+                {{ __('Certificates') }}
             </x-responsive-nav-link>
         </div>
 
