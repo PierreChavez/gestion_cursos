@@ -4,6 +4,7 @@
 
     use App\Models\User;
     use Illuminate\Http\Request;
+    use Spatie\Permission\Models\Role;
 
     class UserController extends Controller
     {
@@ -23,10 +24,13 @@
             $validated = $request->validate([
                 'name' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users',
-                'password' => 'required|string|min:8|confirmed'
+                'password' => 'required|string|min:8|confirmed',
+                'role' => 'required|string|in:admin,teacher,student',
             ]);
 
-            User::create($validated);
+            $user = User::create($validated);
+            $role = Role::findByName($validated['role']);
+            $user->assignRole($role);
 
             return redirect()->route('users.index');
         }

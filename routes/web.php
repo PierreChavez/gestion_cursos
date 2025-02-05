@@ -7,6 +7,7 @@ use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\CertificateController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -25,6 +26,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('attendances', AttendanceController::class);
     Route::resource('resources', ResourceController::class);
     Route::resource('certificates', CertificateController::class);
+    Route::resource('users', UserController::class)->middleware('role:admin');
 });
 
 require __DIR__.'/auth.php';

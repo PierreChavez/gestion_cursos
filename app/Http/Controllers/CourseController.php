@@ -4,22 +4,43 @@
 
     use App\Models\Course;
     use Illuminate\Http\Request;
+    use Illuminate\Support\Facades\Auth;
+    use Illuminate\Routing\Controllers\HasMiddleware;
+    use Illuminate\Routing\Controllers\Middleware;
 
-    class CourseController extends Controller
+    class CourseController extends Controller implements HasMiddleware
     {
+
+        public static function middleware(): array
+        {
+            return [
+                new Middleware('role:admin|teacher', only: ['index', 'show']),
+                //new Middleware('role:student', only: ['index', 'show']),
+            ];
+        }
+
+
         public function index()
         {
-            $courses = Course::all();
+            $user = Auth::user();
+            if ($user->hasRole('admin') || $user->hasRole('teacher')) {
+                $courses = Course::all();
+            } else {
+                $courses = $user->courses;
+            }
             return view('courses.index', compact('courses'));
         }
 
         public function create()
         {
+            $this->authorize('create', Course::class);
             return view('courses.create');
         }
 
         public function store(Request $request)
         {
+            $this->authorize('create', Course::class);
+
             $validated = $request->validate([
                 'name' => 'required|string|max:255',
                 'description' => 'required|string',
