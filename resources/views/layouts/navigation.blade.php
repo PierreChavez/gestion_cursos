@@ -30,6 +30,9 @@
                     <x-nav-link :href="route('certificates.index')" :active="request()->routeIs('certificates.*')">
                         {{ __('Certificates') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
+                        {{ __('Users') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -99,6 +102,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('certificates.index')" :active="request()->routeIs('certificates.*')">
                 {{ __('Certificates') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
+                {{ __('Users') }}
             </x-responsive-nav-link>
         </div>
 

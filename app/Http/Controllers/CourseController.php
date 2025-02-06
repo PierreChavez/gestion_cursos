@@ -3,10 +3,12 @@
     namespace App\Http\Controllers;
 
     use App\Models\Course;
+    use App\Models\User;
     use Illuminate\Http\Request;
     use Illuminate\Support\Facades\Auth;
     use Illuminate\Routing\Controllers\HasMiddleware;
     use Illuminate\Routing\Controllers\Middleware;
+    use Illuminate\Support\Facades\Gate;
 
     class CourseController extends Controller implements HasMiddleware
     {
@@ -14,7 +16,7 @@
         public static function middleware(): array
         {
             return [
-                new Middleware('role:admin|teacher', only: ['index', 'show']),
+                //new Middleware('role:admin|teacher', only: ['index', 'show']),
                 //new Middleware('role:student', only: ['index', 'show']),
             ];
         }
@@ -24,7 +26,7 @@
         {
             $user = Auth::user();
             if ($user->hasRole('admin') || $user->hasRole('teacher')) {
-                $courses = Course::all();
+                $courses = Course::with('teacher')->get();
             } else {
                 $courses = $user->courses;
             }
@@ -33,13 +35,14 @@
 
         public function create()
         {
-            $this->authorize('create', Course::class);
-            return view('courses.create');
+            Gate::authorize('create', Course::class);
+            $teachers = User::role('teacher')->get();
+            return view('courses.create', compact('teachers'));
         }
 
         public function store(Request $request)
         {
-            $this->authorize('create', Course::class);
+            Gate::authorize('create', Course::class);
 
             $validated = $request->validate([
                 'name' => 'required|string|max:255',

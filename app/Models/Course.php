@@ -13,4 +13,9 @@ class Course extends Model
         'modality',
         'teacher_id'
     ];
+
+    public function teacher()
+    {
+        return $this->belongsTo(User::class, 'teacher_id');
+    }
 }
