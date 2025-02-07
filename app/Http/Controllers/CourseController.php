@@ -59,12 +59,14 @@
 
         public function show(Course $course)
         {
+            $course->load('teacher');
             return view('courses.show', compact('course'));
         }
 
         public function edit(Course $course)
         {
-            return view('courses.edit', compact('course'));
+            $teachers = User::role('teacher')->get();
+            return view('courses.edit', compact('course', 'teachers'));
         }
 
         public function update(Request $request, Course $course)

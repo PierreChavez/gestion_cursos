@@ -9,28 +9,16 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <h1>Create Course</h1>
-                    <form action="{{ route('courses.store') }}" method="POST">
-                        @csrf
-                        <label for="name">Name:</label>
-                        <input type="text" id="name" name="name" required>
-                        <label for="description">Description:</label>
-                        <textarea id="description" name="description" required></textarea>
-                        <label for="duration">Duration:</label>
-                        <input type="text" id="duration" name="duration" required>
-                        <label for="modality">Modality:</label>
-                        <select id="modality" name="modality" required>
-                            <option value="presencial">Presencial</option>
-                            <option value="online">Online</option>
-                        </select>
-                        <label for="teacher_id">Teacher:</label>
-                        <select id="teacher_id" name="teacher_id" required>
-                            @foreach($teachers as $teacher)
-                            <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
-                            @endforeach
-                        </select>
-                        <button type="submit">Create</button>
-                    </form>
+                    <x-form :action="route('courses.store')" method="POST"
+                            :fields="[
+                                                  ['name' => 'name', 'label' => 'Name', 'type' => 'text', 'icon' => 'book', 'required' => true],
+                                                  ['name' => 'description', 'label' => 'Description', 'type' => 'textarea', 'icon' => 'info', 'required' => true],
+                                                  ['name' => 'duration', 'label' => 'Duration', 'type' => 'text', 'icon' => 'clock', 'required' => true],
+                                                  ['name' => 'modality', 'label' => 'Modality', 'type' => 'select', 'icon' => 'chalkboard-teacher', 'required' => true, 'options' => ['presencial' => 'Presencial', 'online' => 'Online']],
+                                                  ['name' => 'teacher_id', 'label' => 'Teacher', 'type' => 'select', 'icon' => 'user', 'required' => true, 'options' => $teachers->pluck('name', 'id')->toArray()]
+                                              ]">
+                        Create
+                    </x-form>
                 </div>
             </div>
         </div>
