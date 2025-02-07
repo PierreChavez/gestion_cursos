@@ -9,55 +9,13 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <form action="{{ route('users.update', $user) }}" method="POST" class="space-y-6">
-                        @csrf
-                        @method('PUT')
-                        <div class="form-group">
-                            <label for="name"
-                                   class="block text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
-                            <div class="mt-1 relative rounded-md shadow-sm">
-                                <input type="text" name="name" id="name" value="{{ $user->name }}"
-                                       class="form-input block w-full sm:text-sm border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 rounded-md"
-                                       required>
-                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                    <i class="fas fa-user text-gray-400"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="email"
-                                   class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
-                            <div class="mt-1 relative rounded-md shadow-sm">
-                                <input type="email" name="email" id="email" value="{{ $user->email }}"
-                                       class="form-input block w-full sm:text-sm border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 rounded-md"
-                                       required>
-                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                    <i class="fas fa-envelope text-gray-400"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="role"
-                                   class="block text-sm font-medium text-gray-700 dark:text-gray-300">Role</label>
-                            <select name="role" id="role"
-                                    class="form-select block w-full mt-1 sm:text-sm border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 rounded-md"
-                                    required>
-                                <option value="admin" {{ $user->roles->pluck('name')->first() == 'admin' ? 'selected' :
-                                    '' }}>Admin
-                                </option>
-                                <option value="teacher" {{ $user->roles->pluck('name')->first() == 'teacher' ?
-                                    'selected' : '' }}>Teacher
-                                </option>
-                                <option value="student" {{ $user->roles->pluck('name')->first() == 'student' ?
-                                    'selected' : '' }}>Student
-                                </option>
-                            </select>
-                        </div>
-                        <button type="submit"
-                                class="btn btn-primary inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200 active:bg-blue-600 disabled:opacity-25 transition">
-                            <i class="fas fa-save mr-2"></i> Update
-                        </button>
-                    </form>
+                    <x-form :action="route('users.update', $user)" method="PUT" :fields="[
+                                 ['name' => 'name', 'label' => 'Name', 'type' => 'text', 'icon' => 'user', 'required' => true, 'value' => $user->name],
+                                 ['name' => 'email', 'label' => 'Email', 'type' => 'email', 'icon' => 'envelope', 'required' => true, 'value' => $user->email],
+                                 ['name' => 'role', 'label' => 'Role', 'type' => 'select', 'icon' => 'user-tag', 'required' => true, 'value' => $user->roles->pluck('name')->first(), 'options' => ['admin' => 'Admin', 'teacher' => 'Teacher', 'student' => 'Student']]
+                             ]">
+                        Update
+                    </x-form>
                 </div>
             </div>
         </div>
