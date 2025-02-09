@@ -1,6 +1,6 @@
 @props(['action' => '', 'method' => 'POST', 'fields', 'readonly' => false])
 
-<form action="{{ $action }}" method="{{ $method }}" class="space-y-6">
+<form action="{{ $action }}" method="POST" class="space-y-6">
     @csrf
     @if(in_array($method, ['PUT', 'PATCH', 'DELETE']))
     @method($method)
