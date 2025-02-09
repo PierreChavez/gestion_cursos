@@ -1,4 +1,3 @@
-<!-- resources/views/components/form.blade.php -->
 @props(['action' => '', 'method' => 'POST', 'fields', 'readonly' => false])
 
 <form action="{{ $action }}" method="{{ $method }}" class="space-y-6">

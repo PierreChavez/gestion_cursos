@@ -4,14 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Models\Attendance;
 use App\Models\Enrollment;
+use App\Models\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AttendanceController extends Controller
 {
     public function index()
     {
+        $user = Auth::user();
+        if ($user->hasRole('admin')) {
+            $courses = Course::all();
+        } else {
+            $courses = Course::where('teacher_id', $user->id)->get();
+        }
         $attendances = Attendance::with('enrollment.student', 'enrollment.course')->get();
-        return view('attendances.index', compact('attendances'));
+        return view('attendances.index', compact('attendances', 'courses'));
     }
 
     public function create()
@@ -67,5 +75,18 @@ class AttendanceController extends Controller
         $attendance->delete();
 
         return redirect()->route('attendances.index');
+    }
+
+    public function attendanceSheet(Request $request)
+    {
+        $course_id = $request->input('course_id');
+        $date = $request->input('date');
+
+        $course = Course::findOrFail($course_id);
+        $enrollments = Enrollment::with(['student', 'attendances' => function($query) use ($date) {
+            $query->where('date', $date);
+        }])->where('course_id', $course_id)->get();
+
+        return view('attendances.sheet', compact('course', 'enrollments', 'date'));
     }
 }

@@ -26,4 +26,12 @@ class Enrollment extends Model
     {
         return $this->belongsTo(User::class, 'student_id');
     }
+
+    /**
+     * Get the attendances associated with the enrollment.
+     */
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
+    }
 }
