@@ -1,7 +1,6 @@
 @props(['courses'])
 
-<form action="{{ route('attendances.sheet') }}" method="POST" class="flex items-center space-x-4">
-    @csrf
+<form action="{{ route('attendances.sheet') }}" method="GET" class="flex items-center space-x-4">
     <div class="flex flex-col">
         <select name="course_id" id="course_id" required
                 class="form-select block w-full mt-1 sm:text-sm border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 rounded-md">

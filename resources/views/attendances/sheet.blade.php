@@ -13,7 +13,7 @@
                         $attendance = $enrollment->attendances->first();
                         return [
                             $enrollment->student->name,
-                            $attendance ? $attendance->status : 'No attendance',
+                            $attendance ? $attendance->status : view('components.attendance-form', ['enrollment' => $enrollment, 'date' => $date])->render(),
                             $attendance ? $attendance->comments : ''
                         ];
                     })->toArray()"></x-table>

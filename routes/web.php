@@ -23,8 +23,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('courses', CourseController::class);
     Route::resource('enrollments', EnrollmentController::class);
+    Route::get('attendances/sheet', [AttendanceController::class, 'attendanceSheet'])->name('attendances.sheet');
     Route::resource('attendances', AttendanceController::class);
-    Route::post('attendances/sheet', [AttendanceController::class, 'attendanceSheet'])->name('attendances.sheet');
     Route::resource('resources', ResourceController::class);
     Route::resource('certificates', CertificateController::class);
     Route::resource('users', UserController::class)->middleware('role:admin');
