@@ -7,9 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class Attendance extends Model
 {
     protected $fillable = [
-        'course_id',
-        'student_id',
+        'enrollment_id',
         'date',
-        'present'
+        'status',
+        'comments'
     ];
+
+    /**
+     * Get the enrollment associated with the attendance.
+     */
+    public function enrollment()
+    {
+        return $this->belongsTo(Enrollment::class);
+    }
 }

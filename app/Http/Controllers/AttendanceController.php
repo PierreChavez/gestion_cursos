@@ -1,65 +1,71 @@
 <?php
 
-    namespace App\Http\Controllers;
+namespace App\Http\Controllers;
 
-    use App\Models\Attendance;
-    use Illuminate\Http\Request;
+use App\Models\Attendance;
+use App\Models\Enrollment;
+use Illuminate\Http\Request;
 
-    class AttendanceController extends Controller
+class AttendanceController extends Controller
+{
+    public function index()
     {
-        public function index()
-        {
-            $attendances = Attendance::all();
-            return view('attendances.index', compact('attendances'));
-        }
-
-        public function create()
-        {
-            return view('attendances.create');
-        }
-
-        public function store(Request $request)
-        {
-            $validated = $request->validate([
-                'user_id' => 'required|exists:users,id',
-                'course_id' => 'required|exists:courses,id',
-                'date' => 'required|date',
-                'status' => 'required|string'
-            ]);
-
-            Attendance::create($validated);
-
-            return redirect()->route('attendances.index');
-        }
-
-        public function show(Attendance $attendance)
-        {
-            return view('attendances.show', compact('attendance'));
-        }
-
-        public function edit(Attendance $attendance)
-        {
-            return view('attendances.edit', compact('attendance'));
-        }
-
-        public function update(Request $request, Attendance $attendance)
-        {
-            $validated = $request->validate([
-                'user_id' => 'required|exists:users,id',
-                'course_id' => 'required|exists:courses,id',
-                'date' => 'required|date',
-                'status' => 'required|string'
-            ]);
-
-            $attendance->update($validated);
-
-            return redirect()->route('attendances.index');
-        }
-
-        public function destroy(Attendance $attendance)
-        {
-            $attendance->delete();
-
-            return redirect()->route('attendances.index');
-        }
+        $attendances = Attendance::with('enrollment.student', 'enrollment.course')->get();
+        return view('attendances.index', compact('attendances'));
     }
+
+    public function create()
+    {
+        $enrollments = Enrollment::with('student', 'course')->get();
+        return view('attendances.create', compact('enrollments'));
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'enrollment_id' => 'required|exists:enrollments,id',
+            'date' => 'required|date',
+            'status' => 'required|string',
+            'comments' => 'nullable|string'
+        ]);
+
+        Attendance::create($validated);
+
+        return redirect()->route('attendances.index');
+    }
+
+    public function show(Attendance $attendance)
+    {
+        $enrollments = Enrollment::with('student', 'course')->get();
+        $attendance->load('enrollment.student', 'enrollment.course');
+        return view('attendances.show', compact('attendance', 'enrollments'));
+    }
+
+    public function edit(Attendance $attendance)
+    {
+        $attendance->load('enrollment.student', 'enrollment.course');
+        $enrollments = Enrollment::with('student', 'course')->get();
+        return view('attendances.edit', compact('attendance', 'enrollments'));
+    }
+
+    public function update(Request $request, Attendance $attendance)
+    {
+        $validated = $request->validate([
+            'enrollment_id' => 'required|exists:enrollments,id',
+            'date' => 'required|date',
+            'status' => 'required|string',
+            'comments' => 'nullable|string'
+        ]);
+
+        $attendance->update($validated);
+
+        return redirect()->route('attendances.index');
+    }
+
+    public function destroy(Attendance $attendance)
+    {
+        $attendance->delete();
+
+        return redirect()->route('attendances.index');
+    }
+}
