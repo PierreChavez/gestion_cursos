@@ -11,12 +11,13 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <x-form :action="route('courses.store')" method="POST"
                             :fields="[
-                                                  ['name' => 'name', 'label' => 'Name', 'type' => 'text', 'icon' => 'book', 'required' => true],
-                                                  ['name' => 'description', 'label' => 'Description', 'type' => 'textarea', 'icon' => 'info', 'required' => true],
-                                                  ['name' => 'duration', 'label' => 'Duration', 'type' => 'text', 'icon' => 'clock', 'required' => true],
-                                                  ['name' => 'modality', 'label' => 'Modality', 'type' => 'select', 'icon' => 'chalkboard-teacher', 'required' => true, 'options' => ['presencial' => 'Presencial', 'online' => 'Online']],
-                                                  ['name' => 'teacher_id', 'label' => 'Teacher', 'type' => 'select', 'icon' => 'user', 'required' => true, 'options' => $teachers->pluck('name', 'id')->toArray()]
-                                              ]">
+                                                    ['name' => 'name', 'label' => 'Name', 'type' => 'text', 'icon' => 'book', 'required' => true],
+                                                    ['name' => 'description', 'label' => 'Description', 'type' => 'textarea', 'icon' => 'info', 'required' => true],
+                                                    ['name' => 'modality', 'label' => 'Modality', 'type' => 'select', 'icon' => 'chalkboard-teacher', 'required' => true, 'options' => ['presencial' => 'Presencial', 'online' => 'Online']],
+                                                    ['name' => 'start_date', 'label' => 'Start Date', 'type' => 'date', 'icon' => 'calendar-alt', 'required' => true],
+                                                    ['name' => 'end_date', 'label' => 'End Date', 'type' => 'date', 'icon' => 'calendar-alt', 'required' => true],
+                                                    ['name' => 'teacher_id', 'label' => 'Teacher', 'type' => 'select', 'icon' => 'user', 'required' => true, 'options' => $teachers->pluck('name', 'id')->toArray()]
+                                                ]">
                         Create
                     </x-form>
                 </div>

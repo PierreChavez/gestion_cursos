@@ -9,8 +9,9 @@ class Course extends Model
     protected $fillable = [
         'name',
         'description',
-        'duration',
         'modality',
+        'start_date',
+        'end_date',
         'teacher_id'
     ];
 

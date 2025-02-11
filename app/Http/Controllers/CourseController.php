@@ -47,7 +47,8 @@ class CourseController extends Controller implements HasMiddleware
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
-            'duration' => 'required|string',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
             'modality' => 'required|string',
             'teacher_id' => 'required|exists:users,id',
         ]);
@@ -75,7 +76,8 @@ class CourseController extends Controller implements HasMiddleware
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'duration' => 'required|string',
-            'modality' => 'required|string',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
             'teacher_id' => 'required|exists:users,id',
         ]);
 
