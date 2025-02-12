@@ -9,6 +9,7 @@ class Resource extends Model
     protected $fillable = [
         'course_id',
         'type',
-        'url'
+        'url',
+        'description'
     ];
 }
