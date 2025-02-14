@@ -62,4 +62,32 @@ class CertificateController extends Controller
 
         return redirect()->route('certificates.index');
     }
+
+    public function generateCertificate(Request $request, $studentId, $courseId)
+    {
+        $student = Student::findOrFail($studentId);
+        $course = Course::findOrFail($courseId);
+
+        $grade = Grade::where('student_id', $studentId)->where('course_id', $courseId)->first();
+        $attendance = Attendance::where('student_id', $studentId)->where('course_id', $courseId)->first();
+
+        $minGrade = config('app.min_grade', 70);
+        $minAttendance = config('app.min_attendance', 75);
+
+        if ($grade->grade >= $minGrade && ($attendance->attended_classes / $attendance->total_classes) * 100 >= $minAttendance) {
+            $pdf = PDF::loadView('certificates.certificate', compact('student', 'course', 'grade', 'attendance'));
+            $path = 'certificates/' . $student->id . '_' . $course->id . '.pdf';
+            $pdf->save(storage_path('app/public/' . $path));
+
+            Certificate::create([
+                'student_id' => $studentId,
+                'course_id' => $courseId,
+                'certificate_path' => $path,
+            ]);
+
+            return response()->download(storage_path('app/public/' . $path));
+        }
+
+        return response()->json(['message' => 'Student does not meet the requirements for a certificate.'], 400);
+    }
 }
