@@ -17,7 +17,6 @@ class CourseController extends Controller implements HasMiddleware
     {
         return [
             new Middleware('role:admin|teacher'),
-            //new Middleware('role:student', only: ['index', 'show']),
         ];
     }
 
@@ -60,13 +59,14 @@ class CourseController extends Controller implements HasMiddleware
 
     public function show(Course $course)
     {
-        $course->load('teacher');
+        $course->load('teacher', 'resources');
         return view('courses.show', compact('course'));
     }
 
     public function edit(Course $course)
     {
         $teachers = User::role('teacher')->get();
+        $course->load('resources');
         return view('courses.edit', compact('course', 'teachers'));
     }
 

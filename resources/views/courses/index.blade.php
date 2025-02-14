@@ -24,6 +24,7 @@
                               $course->modality,
                               $course->teacher->name,
                               view('components.actions', [
+                                  'viewRoute' => 'courses.show',
                                   'editRoute' => 'courses.edit',
                                   'deleteRoute' => 'courses.destroy',
                                   'item' => $course

@@ -8,9 +8,11 @@
 
     @foreach($fields as $field)
     <div class="form-group">
+        @if($field['type'] !== 'hidden')
         <label for="{{ $field['name'] }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
             {{ $field['label'] }}
         </label>
+        @endif
         <div class="mt-1 relative rounded-md shadow-sm">
             @if($field['type'] === 'select')
             <select name="{{ $field['name'] }}" id="{{ $field['name'] }}"
@@ -32,9 +34,11 @@
                    value="{{ $field['value'] ?? '' }}"
                    class="form-input block w-full sm:text-sm border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 rounded-md"
                    {{ $field['required'] ?? false ? 'required' : '' }} {{ $readonly ? 'readonly' : '' }}>
+            @if($field['type'] !== 'hidden')
             <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                 <i class="fas fa-{{ $field['icon'] }} text-gray-400"></i>
             </div>
+            @endif
             @endif
         </div>
     </div>

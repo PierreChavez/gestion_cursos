@@ -25,7 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('enrollments', EnrollmentController::class);
     Route::get('attendances/sheet', [AttendanceController::class, 'attendanceSheet'])->name('attendances.sheet');
     Route::resource('attendances', AttendanceController::class);
-    Route::resource('resources', ResourceController::class);
+    Route::resource('resources', ResourceController::class)->middleware('handle.return_url');
     Route::resource('certificates', CertificateController::class);
     Route::resource('users', UserController::class)->middleware('role:admin');
 });
