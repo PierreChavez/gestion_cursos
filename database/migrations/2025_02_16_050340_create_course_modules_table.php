@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('grades', function (Blueprint $table) {
+        Schema::create('course_modules', function (Blueprint $table) {
             $table->id();
-            $table->text('description');
-            $table->foreignId('student_id')->constrained('users');
             $table->foreignId('course_id')->constrained();
-            $table->decimal('grade', 5, 2);
+            $table->string('title');
+            $table->text('content')->nullable();
+            $table->enum('type', ['lesson', 'exam']);
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('grades');
+        Schema::dropIfExists('course_modules');
     }
 };

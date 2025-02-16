@@ -8,6 +8,7 @@ use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\CertificateController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CourseModuleController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -28,6 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('resources', ResourceController::class)->middleware('handle.return_url');
     Route::resource('certificates', CertificateController::class);
     Route::resource('users', UserController::class)->middleware('role:admin');
+    Route::resource('course_modules', CourseModuleController::class);
 });
 
 require __DIR__.'/auth.php';

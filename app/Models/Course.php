@@ -25,4 +25,9 @@ class Course extends Model
     {
         return $this->hasMany(Resource::class);
     }
+
+    public function courseModule()
+    {
+        return $this->belongsTo(CourseModule::class);
+    }
 }
