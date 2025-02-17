@@ -5,7 +5,7 @@
     <input type="hidden" name="enrollment_id" value="{{ $enrollment->id }}">
     <input type="hidden" name="date" value="{{ $date }}">
     <input type="hidden" name="course_id" value="{{ $enrollment->course_id }}">
-    <input type="hidden" name="redirect_to_sheet" value="1">
+    <input type="hidden" name="return_url" value="{{ url()->full() }}">
     <select name="status" required class="form-select block w-full sm:text-sm border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 rounded-md">
         <option value="present">Present</option>
         <option value="late">Late</option>

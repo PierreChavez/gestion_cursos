@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Enrollment;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -65,9 +66,13 @@ class CourseController extends Controller implements HasMiddleware
 
     public function edit(Course $course)
     {
+        $date = now()->format('Y-m-d');
         $teachers = User::role('teacher')->get();
-        $course->load('resources');
-        return view('courses.edit', compact('course', 'teachers'));
+        $course->load('resources', 'teacher');
+        $enrollments = Enrollment::with(['student', 'attendances' => function($query) use ($date) {
+            $query->where('date', $date);
+        }])->where('course_id', $course->id)->get();
+        return view('courses.edit', compact('course', 'teachers', 'enrollments'));
     }
 
     public function update(Request $request, Course $course)

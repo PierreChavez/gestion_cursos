@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <x-tabs id="courseTabs" activeTab="details">
+                    <x-tabs id="courseTabs" activeTab="{{ request()->get('tab', 'details') }}">
                         <x-slot name="tabs">
                             <x-tab id="details" title="Details" active="true"/>
                             <x-tab id="resources" title="Resources"/>
@@ -66,7 +66,9 @@
                         </x-tab-pane>
 
                         <x-tab-pane id="attendance">
-                            <!-- Attendance content will go here -->
+                            <div id="attendanceSheet">
+                                @include('attendances.sheet', ['course' => $course, 'enrollments' => $enrollments, 'date' => now()->toDateString()])
+                            </div>
                         </x-tab-pane>
 
                         <x-tab-pane id="modules">

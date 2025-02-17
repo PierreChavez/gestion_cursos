@@ -39,13 +39,6 @@ class AttendanceController extends Controller
 
         Attendance::create($validated);
 
-        if ($request->has('redirect_to_sheet')) {
-            return redirect()->route('attendances.sheet', [
-                'course_id' => $request->input('course_id'),
-                'date' => $request->input('date')
-            ]);
-        }
-
         return redirect()->route('attendances.index');
     }
 
