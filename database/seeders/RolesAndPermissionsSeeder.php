@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -27,5 +28,15 @@ class RolesAndPermissionsSeeder extends Seeder
         $adminRole->givePermissionTo(['create courses', 'assign courses', 'register attendances']);
         $teacherRole->givePermissionTo(['create courses', 'assign courses', 'register attendances']);
         $studentRole->givePermissionTo(['view own courses', 'view own attendances', 'download certificates']);
+
+        // Create admin user
+        $adminUser = User::create([
+            'name' => 'Admin User',
+            'email' => 'admin@example.com',
+            'password' => bcrypt('password'), // Change 'password' to the desired password
+        ]);
+
+        // Assign admin role to the user
+        $adminUser->assignRole($adminRole);
     }
 }

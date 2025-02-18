@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->integer('duration');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->string('modality');
             $table->foreignId('teacher_id')->constrained('users');
             $table->timestamps();

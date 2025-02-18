@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('resources', function (Blueprint $table) {
             $table->id();
+            $table->text('description')->nullable();
             $table->foreignId('course_id')->constrained();
             $table->string('type');
             $table->string('url');
